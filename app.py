@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup
 import sympy as sp
 import matplotlib.pyplot as plt
 import numpy as np
-from googlesearch import search
 import fitz  # PyMuPDF
 import docx
+from googlesearch import search
 
 # ------------------ ERIK v5 ------------------
 st.set_page_config(page_title="ERIK v5 - AI Academic Assistant", layout="wide")
@@ -21,7 +21,6 @@ mode = st.sidebar.radio("Choose a feature:", [
     "Scientific Calculator",
     "Quiz Generator",
     "PDF/Text Analyzer",
-    "Google Scholar Search",
     "Graph Generator"
 ])
 
@@ -138,23 +137,6 @@ elif mode == "PDF/Text Analyzer":
         else:
             text = str(uploaded_file.read(), "utf-8")
         st.text_area("Extracted Text", text, height=300)
-
-# ------------------ Google Scholar Search ------------------
-elif mode == "Google Scholar Search":
-    st.subheader("Search Google Scholar")
-    keyword = st.text_input("Enter research topic:")
-    if st.button("Search Scholar"):
-        st.info("Fetching top research papers...")
-        query = f"{keyword} site:scholar.google.com"
-        results = []
-        try:
-            for url in search(query, num_results=5):
-                results.append(url)
-        except:
-            st.error("Error searching Scholar.")
-
-        for r in results:
-            st.write(f"- {r}")
 
 # ------------------ Graph Generator ------------------
 elif mode == "Graph Generator":
