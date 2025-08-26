@@ -1,0 +1,11 @@
+streamlit
+googlesearch-python
+beautifulsoup4
+requests
+PyMuPDF
+python-docx
+sympy
+matplotlib
+numpy
+youtubesearchpython
+scholarly
