@@ -5,23 +5,24 @@ import sympy as sp
 import matplotlib.pyplot as plt
 import numpy as np
 from googlesearch import search
+import fitz  # PyMuPDF
+import docx
 
 # ------------------ ERIK v5 ------------------
 st.set_page_config(page_title="ERIK v5 - AI Academic Assistant", layout="wide")
-
 st.title("🧠 ERIK v5 - Exceptional Resources & Intelligence Kernel")
 
 # ------------------ Sidebar ------------------
 st.sidebar.header("Features")
 mode = st.sidebar.radio("Choose a feature:", [
-    "Ask Question", 
+    "Ask Question",
     "Bangla Q&A",
-    "Math Solver", 
-    "Scientific Calculator", 
-    "Quiz Generator", 
-    "PDF/Text Analyzer", 
-    "YouTube Class Search", 
-    "Google Scholar Search", 
+    "Math Solver",
+    "Scientific Calculator",
+    "Quiz Generator",
+    "PDF/Text Analyzer",
+    "YouTube Class Search",
+    "Google Scholar Search",
     "Graph Generator"
 ])
 
@@ -124,14 +125,17 @@ elif mode == "Quiz Generator":
 # ------------------ PDF/Text Analyzer ------------------
 elif mode == "PDF/Text Analyzer":
     st.subheader("Upload PDF or TXT")
-    uploaded_file = st.file_uploader("Choose a file", type=['pdf','txt'])
+    uploaded_file = st.file_uploader("Choose a file", type=['pdf','txt','docx'])
     if uploaded_file:
         text = ""
         if uploaded_file.type == "application/pdf":
-            import fitz  # PyMuPDF
             doc = fitz.open(stream=uploaded_file.read(), filetype="pdf")
             for page in doc:
                 text += page.get_text()
+        elif uploaded_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+            doc = docx.Document(uploaded_file)
+            for para in doc.paragraphs:
+                text += para.text + "\n"
         else:
             text = str(uploaded_file.read(), "utf-8")
         st.text_area("Extracted Text", text, height=300)
@@ -151,6 +155,7 @@ elif mode == "YouTube Class Search":
         except:
             st.error("Error searching YouTube.")
 
+        st.write("### Top Results:")
         for l in links:
             video_id = l.split("v=")[-1]
             st.image(f"https://img.youtube.com/vi/{video_id}/0.jpg", width=300)
