@@ -1,11 +1,10 @@
 streamlit
 googlesearch-python
-beautifulsoup4
 requests
-PyMuPDF
+beautifulsoup4
+pymupdf
 python-docx
 sympy
 matplotlib
 numpy
-youtubesearchpython
-scholarly
+google-api-python-client
