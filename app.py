@@ -21,7 +21,6 @@ mode = st.sidebar.radio("Choose a feature:", [
     "Scientific Calculator",
     "Quiz Generator",
     "PDF/Text Analyzer",
-    "YouTube Class Search",
     "Google Scholar Search",
     "Graph Generator"
 ])
@@ -124,7 +123,7 @@ elif mode == "Quiz Generator":
 
 # ------------------ PDF/Text Analyzer ------------------
 elif mode == "PDF/Text Analyzer":
-    st.subheader("Upload PDF or TXT")
+    st.subheader("Upload PDF or TXT/DOCX")
     uploaded_file = st.file_uploader("Choose a file", type=['pdf','txt','docx'])
     if uploaded_file:
         text = ""
@@ -139,27 +138,6 @@ elif mode == "PDF/Text Analyzer":
         else:
             text = str(uploaded_file.read(), "utf-8")
         st.text_area("Extracted Text", text, height=300)
-
-# ------------------ YouTube Class Search ------------------
-elif mode == "YouTube Class Search":
-    st.subheader("Search YouTube Classes")
-    keyword = st.text_input("Enter topic or class:")
-    if st.button("Search YouTube"):
-        st.info("Fetching top videos...")
-        query = f"{keyword} site:youtube.com"
-        links = []
-        try:
-            for url in search(query, num_results=5):
-                if "watch" in url:
-                    links.append(url)
-        except:
-            st.error("Error searching YouTube.")
-
-        st.write("### Top Results:")
-        for l in links:
-            video_id = l.split("v=")[-1]
-            st.image(f"https://img.youtube.com/vi/{video_id}/0.jpg", width=300)
-            st.write(f"[Watch Video]({l})")
 
 # ------------------ Google Scholar Search ------------------
 elif mode == "Google Scholar Search":
@@ -200,7 +178,7 @@ elif mode == "Graph Generator":
             X = np.linspace(-5, 5, 100)
             Y = np.linspace(-5, 5, 100)
             X, Y = np.meshgrid(X, Y)
-            Z = sp.lambdify((x,), func, "numpy")(X)  # works only for x functions
+            Z = sp.lambdify((x,), func, "numpy")(X)
             fig = plt.figure()
             ax = fig.add_subplot(111, projection='3d')
             ax.plot_surface(X, Y, Z, cmap='viridis')
