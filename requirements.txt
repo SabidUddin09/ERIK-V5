@@ -7,4 +7,3 @@ python-docx
 sympy
 matplotlib
 numpy
-google-api-python-client
